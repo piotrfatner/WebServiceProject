@@ -17,9 +17,6 @@ import javax.xml.bind.DatatypeConverter;
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        String txt = "abba";
-        System.out.println(Security.getInstance().md5(txt)); // 54a8723466e5d487247f3d93d51c66bc
-        System.out.println("Token: "+Security.getInstance().generateToken(40));
 
 
     }

@@ -11,7 +11,6 @@ app.service('loginService',['$http','$window', function ($http, $window) {
         console.log(document.getElementById("login").value);
         console.log(document.getElementById("pwd").value);
 
-        $window.sessionStorage.setItem('userInfo-token', 'asdasdvfdjvnfdkjnkwjanfksajnkdsj');
             console.log("Logged");
             loginDto ={ login: document.getElementById("login").value,
                 password: document.getElementById("pwd").value
@@ -25,6 +24,8 @@ app.service('loginService',['$http','$window', function ($http, $window) {
                     }
                     else{
                         $window.sessionStorage.setItem('userInfo-token',data);
+                        window.location.href="../../views/loginModal.html";
+
                     }
                 }
                 ).error("GTOx2!");

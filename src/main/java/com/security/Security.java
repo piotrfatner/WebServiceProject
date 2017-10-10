@@ -1,7 +1,16 @@
 package com.security;
 
+
+import sun.util.calendar.BaseCalendar;
+
 import java.security.SecureRandom;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Random;
+import java.util.Date;
 
 public class Security {
     public static Security securityInstance = null;
@@ -42,5 +51,29 @@ public class Security {
             //error action
         }
         return null;
+    }
+
+    public Timestamp getTimeStamp(String date)  {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try{
+            Date parsedDate = dateFormat.parse(date);
+            return new java.sql.Timestamp(parsedDate.getTime());
+
+        }catch (ParseException e){
+            e.getStackTrace();
+        }
+        return new Timestamp(System.currentTimeMillis());
+    }
+
+    public String getExpirationDate(){
+        java.sql.Date mySqlDate = java.sql.Date.valueOf(LocalDate.now());
+        LocalDate ld =  mySqlDate.toLocalDate();
+//Adding a true month is built-in.
+
+        LocalDate monthLater = ld.plusMonths( 1 );
+//Convert back to java.sql for storage in the database.
+
+        java.sql.Date sqlDate = java.sql.Date.valueOf( monthLater );
+        return sqlDate.toString();
     }
 }

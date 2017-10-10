@@ -21,8 +21,7 @@ public class LoginController {
 
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public @ResponseBody String authorizate(@RequestBody LoginDTO loginDto){
-        System.out.println(loginService.getTokenForUser(loginDto));
-        return "fakdfhkdsbgfhsnaj3432kcnkxdi";
+        return loginService.getTokenForUser(loginDto);
     }
 
 

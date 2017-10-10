@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserMapper implements RowMapper<UserDTO> {
+public class UserMapper implements RowMapper<UserDTO>{
     @Override
     public UserDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         UserDTO userDTO = new UserDTO();
