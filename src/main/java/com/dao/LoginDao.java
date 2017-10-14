@@ -7,6 +7,7 @@ import com.enums.EDbSqls;
 import com.mapper.PasswordMapper;
 import com.mapper.TokenMapper;
 import com.mapper.UserMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 
@@ -25,11 +26,12 @@ public class LoginDao {
     }
 
     public UserDTO checkIfUserInDB(String login, JdbcTemplate jdbcTemplate){
-        UserDTO userDTO = jdbcTemplate.queryForObject(EDbSqls.SELECT_USER_BY_LOGIN.getQuery(), new Object[]{login}, new UserMapper());
-        if(userDTO == null){
+        try{
+            UserDTO userDTO = jdbcTemplate.queryForObject(EDbSqls.SELECT_USER_BY_LOGIN.getQuery(), new Object[]{login}, new UserMapper());
+            return userDTO;
+        }catch(EmptyResultDataAccessException e){
             return null;
         }
-        return userDTO;
     }
 
     public PasswordDTO getPasswordForUserById(long userId, JdbcTemplate jdbcTemplate){
@@ -44,5 +46,14 @@ public class LoginDao {
 
     public Integer insertNewTokenForUser(long userId, String token, String expirationDate, JdbcTemplate jdbcTemplate){
         return jdbcTemplate.update(EDbSqls.INSERT_TOKEN_INTO_DB.getQuery(),new Object[] {token, expirationDate, userId});
+    }
+
+    public TokenDTO checkIfTokenValid(String token, JdbcTemplate jdbcTemplate){
+        try {
+            TokenDTO tokenDTO = jdbcTemplate.queryForObject(EDbSqls.SELECT_TOKEN_BY_TOKEN.getQuery(), new Object[]{token}, new TokenMapper());
+            return tokenDTO;
+        }catch(EmptyResultDataAccessException e){
+        }
+        return null;
     }
 }

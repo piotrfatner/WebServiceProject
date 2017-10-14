@@ -23,8 +23,9 @@ app.service('loginService',['$http','$window', function ($http, $window) {
                         self.scope.invalidCreditentials = true;
                     }
                     else{
+                        self.scope.invalidCreditentials = false;
                         $window.sessionStorage.setItem('userInfo-token',data);
-                        window.location.href="../../views/loginModal.html";
+                        window.location.href="../../views/home.html";
 
                     }
                 }
