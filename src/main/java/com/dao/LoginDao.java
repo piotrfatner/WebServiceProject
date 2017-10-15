@@ -40,8 +40,14 @@ public class LoginDao {
     }
 
     public TokenDTO getTokenForUserById(long userId, JdbcTemplate jdbcTemplate){
+        try{
+
         TokenDTO tokenDTO = jdbcTemplate.queryForObject(EDbSqls.SELECT_TOKEN_BY_USER_ID.getQuery(), new Object[] {userId}, new TokenMapper());
         return tokenDTO;
+        }catch(EmptyResultDataAccessException e){
+
+        }
+        return null;
     }
 
     public Integer insertNewTokenForUser(long userId, String token, String expirationDate, JdbcTemplate jdbcTemplate){
@@ -55,5 +61,23 @@ public class LoginDao {
         }catch(EmptyResultDataAccessException e){
         }
         return null;
+    }
+
+    public Integer checkIfUserAlreadyInDB(String login, String email, String firstName, String lastName, JdbcTemplate jdbcTemplate){
+        Integer userInDB = jdbcTemplate.queryForInt(EDbSqls.CHECK_IF_USER_ALREADY_IN_DB.getQuery(), new Object[]{login, email, firstName, lastName});
+        return userInDB;
+    }
+
+    public Integer getLastUserCardId(JdbcTemplate jdbcTemplate){
+        Integer lastUserCardId = jdbcTemplate.queryForInt(EDbSqls.GET_LAST_USER_CARD_ID.getQuery());
+        return lastUserCardId;
+    }
+
+    public Integer insertNewUser(String firstName, String lastName, String login, String email,Integer userCardId, JdbcTemplate jdbcTemplate){
+        return jdbcTemplate.update(EDbSqls.INSERT_NEW_USER.getQuery(),new Object[] {firstName,lastName,login,email,userCardId});
+    }
+
+    public Integer insertNewPassword(String password, long userId, JdbcTemplate jdbcTemplate){
+        return jdbcTemplate.update(EDbSqls.INSERT_NEW_PASSWORD.getQuery(), new Object[] {password, userId});
     }
 }

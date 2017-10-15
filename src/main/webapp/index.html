@@ -7,28 +7,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.30/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
     <script src="js/controller/loginController.js"></script>
     <script src="js/service/loginService.js"></script>
 </head>
-<body>
+<body ng-controller="loginCtrl">
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">WebService</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Page 1</a></li>
-            <li><a href="#">Page 2</a></li>
-        </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="#" ng-click="signUp()"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#" ng-click="loginIn()"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ul>
     </div>
 </nav>
-<div class="container" ng-controller="loginCtrl">
-    <h2>Login form</h2>
+<div class="container" ng-show="loginForm">
+    <h2>Zaloguj się!</h2>
     <form id="logging" ng-submit="loginAction()">
         <div class="form-group">
             <label for="login">Login:</label>
@@ -40,11 +36,98 @@
 
         </div>
         <div class="checkbox">
-            <label><input type="checkbox" name="remember"> Remember me</label>
+            <label><input type="checkbox" name="remember" checked="checked"> Remember me</label>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
         <div style="color:red" ng-show="invalidCreditentials">Incorrect login or password!</div>
     </form>
+</div>
+<div class="container" ng-show="singupForm">
+    <h2>Zarejestruj się!</h2>
+    <form id="signingUp" ng-submit="signupAction()">
+        <div class="container">
+            <table >
+                <tr>
+                    <td>
+                        <label><b>Login</b></label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Login" name="login2" id="login2" minlength="6" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Imię</b></label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Imię" name="firstName" id="firstName" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Nazwisko</b></label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Nazwisko" name="lastName" id="lastName" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Email</b></label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Email" name="email" id="email" maxlength="40" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Hasło</b></label>
+                    </td>
+                    <td>
+                        <input type="password" placeholder="Enter Password" name="pwd2" id="pwd2" minlength="6" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Hasło musi składać sie z co najmniej 1 cyfry, jednej dużej litery i jednej małej. Minimalna długość hasła wynosi 6." required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b style="margin-right: 20px;">Powtórz hasło</b></label>
+                    </td>
+                    <td>
+                        <input type="password" placeholder="Repeat Password" name="pwd2-repeat" id="pwd2-repeat" minlength="6" required>
+                        <div style="color:red" ng-show="">Hasła nie są takie same!</div>
+                    </td>
+                </tr>
+            </table>
+            <div class="form-group">
+            <input type="checkbox" checked="checked"> Pamiętaj mnie
+            </div>
+            </br>
+            <p>Akceptujesz nasze postanowienia: <a href="#">Polityka użytkowania</a>.</p>
+
+            <div class="clearfix">
+                <button type="submit" class="signupbtn">Sign Up</button>
+            </div>
+        </div>
+    </form>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{modalHeader}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{modalBody}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 </body>
 </html>

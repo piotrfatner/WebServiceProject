@@ -7,6 +7,18 @@ app.controller('loginCtrl', ['$scope', 'loginService', function ($scope, loginSe
     $scope.loginAction = function () {
         loginService.loginAction();
     };
+
+    $scope.signupAction = function () {
+        loginService.signupAction();
+    }
+
+    $scope.signUp = function () {
+        loginService.signUp();
+    };
+
+    $scope.loginIn = function () {
+        loginService.LoginIn();
+    };
     $scope.setScope();
 
 }]);

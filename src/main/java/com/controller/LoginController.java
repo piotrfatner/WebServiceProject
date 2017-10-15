@@ -1,8 +1,11 @@
 package com.controller;
 
 import com.dto.LoginDTO;
+import com.dto.RegistrationDTO;
+import com.security.Security;
 import com.service.LoginService;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,14 @@ public class LoginController {
     public @ResponseBody String authorizate(@RequestBody LoginDTO loginDto){
         return loginService.getTokenForUser(loginDto);
     }
+
+    @RequestMapping(value="/signup", method = RequestMethod.POST)
+    public @ResponseBody
+    ResponseEntity<?> signUp(@RequestBody RegistrationDTO registrationDTO) throws Exception {
+        return loginService.signUp(registrationDTO);
+    }
+
+
 
 
 }

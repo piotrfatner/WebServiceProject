@@ -25,6 +25,7 @@ public class UserSideController {
 
     @RequestMapping(value = "/getUserDatas/{token}", method = RequestMethod.GET)
     public UserDTO getUserDatas(@PathVariable("token") String insertedToken){
-        return userSideService.getUserDatas(insertedToken);
+        //return userSideService.getUserDatas(insertedToken);
+        return null;
     }
 }

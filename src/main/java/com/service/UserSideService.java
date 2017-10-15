@@ -23,7 +23,7 @@ public class UserSideService {
         return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 
-    public UserDTO getUserDatas(String insertedToken){
+    /*public UserDTO getUserDatas(String insertedToken){
 
-    }
+    }*/
 }

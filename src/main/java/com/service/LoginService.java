@@ -1,19 +1,19 @@
 package com.service;
 
 import com.dao.LoginDao;
-import com.dto.LoginDTO;
-import com.dto.PasswordDTO;
-import com.dto.TokenDTO;
-import com.dto.UserDTO;
+import com.dto.*;
 import com.enums.EDbSqls;
 import com.mapper.UserMapper;
 import com.security.Security;
 import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.Resource;
 import java.sql.Time;
@@ -62,5 +62,25 @@ public class LoginService {/*
         jdbcTemplate.update(sql2, new Object[]{"Aaron", "Paul2", "aaron2",101});
 */
 
+    }
+
+    public ResponseEntity<?> signUp(RegistrationDTO registrationDTO){
+        String login = registrationDTO.getLogin();
+        String email = registrationDTO.getEmail();
+        String firstName = registrationDTO.getFirstName();
+        String lastName = registrationDTO.getLastName();
+        String password = Security.getInstance().md5(registrationDTO.getPwd());
+        Integer lastUserCardId = LoginDao.getInstance().getLastUserCardId(jdbcTemplate);
+        Integer usersInDB = LoginDao.getInstance().checkIfUserAlreadyInDB(registrationDTO.getLogin(),registrationDTO.getEmail(), registrationDTO.getFirstName(), registrationDTO.getLastName(),jdbcTemplate);
+        if(usersInDB !=0){ // jezeli user juz istnieje zwracam 400
+            return new ResponseEntity<String>("Dany użytkownik już istnieje!",HttpStatus.valueOf(400));
+        }
+        Integer success = LoginDao.getInstance().insertNewUser(firstName,lastName,login,email,lastUserCardId+1,jdbcTemplate);
+        long lastInsertedUserId = LoginDao.getInstance().checkIfUserInDB(login,jdbcTemplate).getUserId();
+        Integer success2 = LoginDao.getInstance().insertNewPassword(password,lastInsertedUserId, jdbcTemplate);
+        if(success==1 && success2==1){
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity<String>("Błąd podczas wstawiania!",HttpStatus.valueOf(400));
     }
 }
