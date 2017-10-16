@@ -21,7 +21,7 @@ import java.util.*;
 public class Security {
     public static Security securityInstance = null;
     private static final Random random = new Random();
-    private static final String CHARS = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!@#$";
+    private static final String CHARS = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!@$";
 
     private Security(){}
 

@@ -9,6 +9,7 @@ public class UserDTO implements Serializable {
     private String userLastName;
     private String login;
     private long userCardId;
+    private String email;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -52,5 +53,13 @@ public class UserDTO implements Serializable {
 
     public void setUserCardId(long userCardId) {
         this.userCardId = userCardId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

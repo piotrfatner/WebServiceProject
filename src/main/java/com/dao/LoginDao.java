@@ -1,14 +1,19 @@
 package com.dao;
 
+import com.dto.BookDTO;
 import com.dto.PasswordDTO;
 import com.dto.TokenDTO;
 import com.dto.UserDTO;
 import com.enums.EDbSqls;
+import com.mapper.BookMapper;
 import com.mapper.PasswordMapper;
 import com.mapper.TokenMapper;
 import com.mapper.UserMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.awt.print.Book;
+import java.util.List;
 
 
 public class LoginDao {
@@ -79,5 +84,14 @@ public class LoginDao {
 
     public Integer insertNewPassword(String password, long userId, JdbcTemplate jdbcTemplate){
         return jdbcTemplate.update(EDbSqls.INSERT_NEW_PASSWORD.getQuery(), new Object[] {password, userId});
+    }
+
+    public List<BookDTO> getBooksForUser(long userId, JdbcTemplate jdbcTemplate){
+        List<BookDTO> bookDTO= jdbcTemplate.query(EDbSqls.SELECT_BOOKS_FOR_USER.getQuery(),new Object[]{userId}, new BookMapper());
+        return bookDTO;
+    }
+
+    public UserDTO getCurrentUser(long userId, JdbcTemplate jdbcTemplate){
+        return jdbcTemplate.queryForObject(EDbSqls.SELECT_USER_BY_ID.getQuery(), new Object[]{userId}, new UserMapper());
     }
 }

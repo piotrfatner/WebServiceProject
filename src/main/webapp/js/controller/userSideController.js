@@ -19,6 +19,10 @@ app.controller('userSideCtrl', ['$scope', 'userSideService', function ($scope, u
         userSideService.getUserDatas();
     };
 
+    $scope.getBooksForUser = function () {
+        return userSideService.getBooksForUser();
+    };
+
     window.setInterval(function() {userSideService.rotateImages();},7000);
 
 

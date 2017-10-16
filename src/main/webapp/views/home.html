@@ -32,12 +32,12 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="navbar-collapse collapse" ng-init="">
+        <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li>Hi {{user}}!</li>
                 <li> <a class="navbar-brand pull-right" ng-click="logoutClearTokenFromWindow()">Log Out </a></li>
             </ul>
-            </li>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-brand pull-right">Hi !</li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -68,17 +68,22 @@
     </ul>
 
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
+        <div id="home" class="tab-pane fade in active" ng-init="getBooksForUser()">
             <h3>Twoje wypożyczenia:</h3>
-            <p>Some content.</p>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="book in allBooksForUser">Tytuł: '{{book.title}}', Autor: {{book.author}}, Typ: {{book.bookGenre}} <span style="float: right">Wypożyczono: <date-util format="yyyy-mm-dd">{{book.dateOfHire}}</date-util></span></li>
+            </ul>
         </div>
         <div id="menu1" class="tab-pane fade">
             <h3>Wypożycz:</h3>
             <p>Some content in menu 1.</p>
         </div>
-        <div id="menu2" class="tab-pane fade">
+        <div id="menu2" class="tab-pane fade" ng-init="getUserDatas()">
             <h3>O tobie:</h3>
-            <p>Some content in menu 2.</p>
+            <p>Imię: {{userDatas.userFirstName}}</p>
+            <p>Nazwisko: {{userDatas.userLastName}}</p>
+            <p>Email: {{userDatas.email}}</p>
+            <p>Numer karty bibliotecznej: {{userDatas.userCardId}}</p>
         </div>
         <div id="menu3" class="tab-pane fade">
             <h3>Kontakt:</h3>

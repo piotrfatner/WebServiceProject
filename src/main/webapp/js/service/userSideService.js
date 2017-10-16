@@ -40,10 +40,17 @@ app.service('userSideService',['$http','$window', function ($http, $window) {
     };
 
     this.getUserDatas = function () {
-        if(checkTokenValid() == true){
-
-        }
-    }
+        $http.get("/getUserDatas/"+$window.sessionStorage.getItem('userInfo-token')).success(
+            function (data) {
+                self.scope.userDatas = data;
+                console.log(data);
+            }
+        ).error(
+            function () {
+                return "";
+            }
+        )
+    };
 
     this.rotateImages = function () {
 
@@ -57,5 +64,19 @@ app.service('userSideService',['$http','$window', function ($http, $window) {
         if (num == len) {
             num = 0;
         }
+    };
+
+    this.getBooksForUser = function () {
+        $http.get("/getBookHireForUser/"+$window.sessionStorage.getItem('userInfo-token')).success(
+            function (data) {
+                console.log(data);
+                self.scope.allBooksForUser = data;
+                console.log(self.scope.allBooksForUser);
+            }
+        ).error(
+            function () {
+                return "";
+            }
+    )
     }
 }]);

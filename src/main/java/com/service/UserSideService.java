@@ -1,6 +1,7 @@
 package com.service;
 
 import com.dao.LoginDao;
+import com.dto.BookDTO;
 import com.dto.TokenDTO;
 import com.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import sun.rmi.runtime.Log;
+
+import java.util.List;
 
 @Service
 public class UserSideService {
@@ -23,7 +27,20 @@ public class UserSideService {
         return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 
-    /*public UserDTO getUserDatas(String insertedToken){
+    public ResponseEntity<?> getUserDatas(String insertedToken){
+        TokenDTO tokenDTO = LoginDao.getInstance().checkIfTokenValid(insertedToken, jdbcTemplate);
+        if(tokenDTO!=null){
+            return  new ResponseEntity<UserDTO>(LoginDao.getInstance().getCurrentUser(tokenDTO.getUserIdFk(),jdbcTemplate),HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
 
-    }*/
+    public ResponseEntity<?> getBookHireForUser(String token){
+        // checkTokenValid...
+        TokenDTO tokenDTO = LoginDao.getInstance().checkIfTokenValid(token, jdbcTemplate);
+        if(tokenDTO!=null){
+            return  new ResponseEntity<List<BookDTO>>(LoginDao.getInstance().getBooksForUser(tokenDTO.getUserIdFk(), jdbcTemplate),HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
 }

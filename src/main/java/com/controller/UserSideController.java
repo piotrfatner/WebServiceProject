@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dto.BookDTO;
 import com.dto.UserDTO;
 import com.mysql.fabric.Response;
 import com.service.UserSideService;
@@ -24,8 +25,12 @@ public class UserSideController {
     }
 
     @RequestMapping(value = "/getUserDatas/{token}", method = RequestMethod.GET)
-    public UserDTO getUserDatas(@PathVariable("token") String insertedToken){
-        //return userSideService.getUserDatas(insertedToken);
-        return null;
+    public ResponseEntity<?> getUserDatas(@PathVariable("token") String insertedToken){
+        return userSideService.getUserDatas(insertedToken);
+    }
+
+    @RequestMapping(value = "/getBookHireForUser/{token}", method = RequestMethod.GET)
+    public ResponseEntity<?>  getBookHireForUser(@PathVariable("token") String insertedToken){
+        return userSideService.getBookHireForUser(insertedToken);
     }
 }

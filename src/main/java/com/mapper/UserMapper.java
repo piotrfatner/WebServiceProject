@@ -15,6 +15,7 @@ public class UserMapper implements RowMapper<UserDTO>{
         userDTO.setUserFirstName(rs.getString("USER_FIRSTNAME"));
         userDTO.setUserLastName(rs.getString("USER_LASTNAME"));
         userDTO.setUserCardId(rs.getInt("USER_CARD_ID"));
+        userDTO.setEmail(rs.getString("EMAIL"));
         return userDTO;
     }
 }
