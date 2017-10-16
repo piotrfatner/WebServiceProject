@@ -43,4 +43,13 @@ public class UserSideService {
         }
         return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
+
+    public ResponseEntity<?> getAllBooks(String token){
+        // checkTokenValid...
+        TokenDTO tokenDTO = LoginDao.getInstance().checkIfTokenValid(token, jdbcTemplate);
+        if(tokenDTO!=null){
+            return  new ResponseEntity<List<BookDTO>>(LoginDao.getInstance().getAllBooks(jdbcTemplate),HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
 }

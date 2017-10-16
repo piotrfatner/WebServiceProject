@@ -52,6 +52,45 @@ app.service('userSideService',['$http','$window', function ($http, $window) {
         )
     };
 
+    this.getAllBooks = function () {
+        $http.get("/getAllBooks/"+$window.sessionStorage.getItem('userInfo-token')).success(
+            function (data) {
+                self.scope.allBooks = data;
+                console.log(data);
+            }
+        ).error(
+        function () {
+            return "";
+        }
+    )};
+
+    this.checkboxChange = function (id) {
+        var ckName = document.getElementsByName("checkedBooks");
+        for (var i = 0; i<ckName.length;i++){
+            console.log(id);
+            console.log(id.book);
+            console.log(id.checked);
+            console.log(ckName[i].id);
+            if(document.getElementById(id.book.bookId).checked){
+                if (id.book.bookId == ckName[i].id) {
+                }
+                else {
+                    console.log("dwaaa");
+                    document.getElementById(ckName[i].id).disabled = true;
+                }
+                document.getElementById("hireBookButton").style.display = 'block';
+            }
+            else {
+                if (id.book.bookId == ckName[i].id) {
+                }
+                else {
+                    document.getElementById(ckName[i].id).disabled = false;
+                }
+                document.getElementById("hireBookButton").style.display = 'none';
+            }
+        }
+    };
+
     this.rotateImages = function () {
 
         if (!rotator)

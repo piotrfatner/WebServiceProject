@@ -23,6 +23,28 @@ app.controller('userSideCtrl', ['$scope', 'userSideService', function ($scope, u
         return userSideService.getBooksForUser();
     };
 
+    $scope.getAllBooks = function () {
+        return userSideService.getAllBooks();
+    };
+    $scope.checkboxChange= function (id) {
+        userSideService.checkboxChange(id);
+    };
+    function ckChange(ckType) {
+        var ckName = document.getElementById(ckType.id);
+
+        for (var i = 0; i < ckName.length; i++) {
+            if (!ckType.checked) {
+                ckName[i].disabled = false;
+            } else {
+                if (!ckName[i].checked) {
+                    ckName[i].disabled = true;
+                } else {
+                    ckName[i].disabled = false;
+                }
+            }
+        }
+
+    };
     window.setInterval(function() {userSideService.rotateImages();},7000);
 
 

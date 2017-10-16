@@ -74,9 +74,12 @@
                 <li class="list-group-item" ng-repeat="book in allBooksForUser">Tytuł: '{{book.title}}', Autor: {{book.author}}, Typ: {{book.bookGenre}} <span style="float: right">Wypożyczono: <date-util format="yyyy-mm-dd">{{book.dateOfHire}}</date-util></span></li>
             </ul>
         </div>
-        <div id="menu1" class="tab-pane fade">
+        <div id="menu1" class="tab-pane fade" ng-init="getAllBooks()">
             <h3>Wypożycz:</h3>
-            <p>Some content in menu 1.</p>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="book in allBooks">{{book.title}} <input type="checkbox" id={{book.bookId}} name="checkedBooks" value="1" tabIndex="1" ng-click="checkboxChange(this)" style="float: right"/></li>
+            </ul>
+            <button id ="hireBookButton" ng-click="hireBook()" style="display: none">Wypożycz książke</button>
         </div>
         <div id="menu2" class="tab-pane fade" ng-init="getUserDatas()">
             <h3>O tobie:</h3>

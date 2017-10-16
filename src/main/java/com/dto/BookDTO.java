@@ -10,6 +10,7 @@ public class BookDTO implements Serializable {
     private String author;
     private String iSBN;
     private String bookGenre;
+    private long bookId;
 
     public String getDateOfHire() {
         return dateOfHire;
@@ -57,5 +58,13 @@ public class BookDTO implements Serializable {
 
     public void setBookGenre(String bookGenre) {
         this.bookGenre = bookGenre;
+    }
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
     }
 }

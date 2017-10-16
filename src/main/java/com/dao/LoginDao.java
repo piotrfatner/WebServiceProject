@@ -94,4 +94,9 @@ public class LoginDao {
     public UserDTO getCurrentUser(long userId, JdbcTemplate jdbcTemplate){
         return jdbcTemplate.queryForObject(EDbSqls.SELECT_USER_BY_ID.getQuery(), new Object[]{userId}, new UserMapper());
     }
+
+    public List<BookDTO> getAllBooks(JdbcTemplate jdbcTemplate){
+        List<BookDTO> bookDTO = jdbcTemplate.query(EDbSqls.SELECT_ALL_BOOKS.getQuery(), new BookMapper());
+        return bookDTO;
+    }
 }
