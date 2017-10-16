@@ -29,6 +29,10 @@ app.controller('userSideCtrl', ['$scope', 'userSideService', function ($scope, u
     $scope.checkboxChange= function (id) {
         userSideService.checkboxChange(id);
     };
+
+    $scope.hireBook = function () {
+        userSideService.hireBook();
+    }
     function ckChange(ckType) {
         var ckName = document.getElementById(ckType.id);
 

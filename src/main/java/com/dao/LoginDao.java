@@ -99,4 +99,8 @@ public class LoginDao {
         List<BookDTO> bookDTO = jdbcTemplate.query(EDbSqls.SELECT_ALL_BOOKS.getQuery(), new BookMapper());
         return bookDTO;
     }
+
+    public Integer hireBook(long userId,String bookId, JdbcTemplate jdbcTemplate){
+        return jdbcTemplate.update(EDbSqls.INSERT_NEW_BOOK_HIRE.getQuery(), new Object[]{userId, bookId});
+    }
 }

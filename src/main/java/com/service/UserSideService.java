@@ -52,4 +52,12 @@ public class UserSideService {
         }
         return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
+
+    public ResponseEntity<?> hireBook(String token, String bookId){
+        TokenDTO tokenDTO = LoginDao.getInstance().checkIfTokenValid(token, jdbcTemplate);
+        if(tokenDTO!=null){
+            return  new ResponseEntity(LoginDao.getInstance().hireBook(tokenDTO.getUserIdFk(),bookId,jdbcTemplate),HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
 }

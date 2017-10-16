@@ -10,6 +10,7 @@ app.service('userSideService',['$http','$window', function ($http, $window) {
     self.scope = null;
     self.setScope = function(scope){
         self.scope = scope;
+        self.scope.bookToHire = null;
         this.checkTokenValid();
     };
 
@@ -52,7 +53,7 @@ app.service('userSideService',['$http','$window', function ($http, $window) {
         )
     };
 
-    this.getAllBooks = function () {
+    this.getAllBooks = function () {;
         $http.get("/getAllBooks/"+$window.sessionStorage.getItem('userInfo-token')).success(
             function (data) {
                 self.scope.allBooks = data;
@@ -73,6 +74,7 @@ app.service('userSideService',['$http','$window', function ($http, $window) {
             console.log(ckName[i].id);
             if(document.getElementById(id.book.bookId).checked){
                 if (id.book.bookId == ckName[i].id) {
+                    self.scope.bookToHire = id.book.bookId;
                 }
                 else {
                     console.log("dwaaa");
@@ -82,6 +84,7 @@ app.service('userSideService',['$http','$window', function ($http, $window) {
             }
             else {
                 if (id.book.bookId == ckName[i].id) {
+                    self.scope.bookToHire = null;
                 }
                 else {
                     document.getElementById(ckName[i].id).disabled = false;
@@ -90,6 +93,27 @@ app.service('userSideService',['$http','$window', function ($http, $window) {
             }
         }
     };
+
+    this.hireBook = function () {
+        $http.get("/hireBook/"+ $window.sessionStorage.getItem('userInfo-token')+"/"+self.scope.bookToHire).success(
+            function (data) {
+                self.scope.modalHeader = "Sukces!";
+                self.scope.modalBody = "Udało ci się wypożyczyć książkę!";
+                $('#myModalHome').modal('show');
+                self.getBooksForUser();
+                self.getAllBooks();
+            }
+        ).error(
+            function () {
+                self.scope.modalHeader = "Błąd!";
+                self.scope.modalBody = "Coś poszło nie tak!";
+                $('#myModalHome').modal('show');
+                self.getBooksForUser();
+                self.getAllBooks();
+            }
+        )
+
+    }
 
     this.rotateImages = function () {
 

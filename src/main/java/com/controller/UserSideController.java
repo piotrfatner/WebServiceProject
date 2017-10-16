@@ -38,4 +38,9 @@ public class UserSideController {
     public ResponseEntity<?>  getAllBooks(@PathVariable("token") String insertedToken){
         return userSideService.getAllBooks(insertedToken);
     }
+    @RequestMapping(value = "/hireBook/{token}/{bookId}", method = RequestMethod.GET)
+    public ResponseEntity<?>  hireBook(@PathVariable("token") String insertedToken, @PathVariable("bookId") String bookId){
+        return userSideService.hireBook(insertedToken, bookId);
+       // return new ResponseEntity(HttpStatus.OK);
+    }
 }
